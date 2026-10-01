@@ -1,16 +1,16 @@
 def load_inventory():
-    file = open("orders.txt", "a")
+    file = open("inventory.txt", "a")
     file.close()
 
-    with open("orders.txt", "r") as file:
-        orders = file.readlines()
+    with open("inventory.txt", "r") as file:
+        inventory = file.readlines()
 
-    return orders
+    return inventory
 
 
-def save_inventory(orders):
-    with open("orders.txt", "w") as file:
-        file.writelines(orders)
+def save_inventory(inventory):
+    with open("inventory.txt", "w") as file:
+        file.writelines(inventory)
 
 
 def get_valid_input():
@@ -22,15 +22,20 @@ def get_valid_input():
         return "Error"
 
 
-orders = load_inventory() #list
 
-print("Current Orders: \n")
+inventory = load_inventory() #list
+
+
+print("Current Inventory: \n")
+
+if len(inventory) == 0:
+    print("No items in inventory.")
+else:
+    for item in inventory:
+        print(item.strip())
 
 current_id = 1001 #set first id number as 1001
 
-for order in orders:
-    order = order.strip()
-    print(order)
 
 
 while True:
@@ -45,16 +50,17 @@ while True:
         print("Invalid quantity")
         continue
 
-    new_id = current_id + len(orders) #id number starts from 1001 + [0, 1, 2, 3...]
+    new_id = current_id + len(inventory) #id number starts from 1001 + [0, 1, 2, 3...]
 
-    new_order = str(new_id) + "," + product_input + "," + str(quantity) + "\n"
+    new_item = str(new_id) + "," + product_input + "," + str(quantity) + "\n"
 
-    orders.append(new_order)
+    inventory.append(new_item)
 
-    print("New Order Added:")
-    print(new_order.strip())
-    print("Orders successfully saved to orders.txt")
+    print("New Item Added:")
+    print(new_item.strip())
+    save_inventory(inventory) #save inventory to file after each new item is added
+    print("Inventory successfully saved to inventory.txt")
 
 
-save_inventory(orders)
+save_inventory(inventory)
 
